@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+
 public class PlayerMovement : MonoBehaviour
 {
     private float currentSpeed;
@@ -10,7 +11,7 @@ public class PlayerMovement : MonoBehaviour
     private float baseLineGravity;
     public float jumpSpeed = 0.8f;
     public float dodgeDistance = 7f;
-    public float dodgeSpeed = 4f; 
+    public float dodgeSpeed = 4f;
 
     private float moveX;
     private float moveZ;
@@ -19,17 +20,21 @@ public class PlayerMovement : MonoBehaviour
     public CharacterController characterController;
 
     private bool dodgeOnCooldown = false;
-    private float dodgeCooldown = 3.0f;
+    private float dodgeCooldown = 5.0f;
     private float dodgeCooldownTimer = 0.0f;
 
     private Vector3 dodgeStartPosition;
     private Vector3 dodgeTargetPosition;
     private float dodgeLerpTime;
 
+    private int jumpsRemaining;
+    public int maxJumps = 2;
+
     void Start()
     {
         baseLineGravity = gravity;
         currentSpeed = 10.0f;
+        jumpsRemaining = maxJumps;
     }
 
     void Update()
@@ -46,10 +51,19 @@ public class PlayerMovement : MonoBehaviour
 
         characterController.Move(move);
 
-        if (characterController.isGrounded && Input.GetButtonDown("Jump"))
+        if (characterController.isGrounded)
         {
-            gravity = baseLineGravity;
-            gravity *= -jumpSpeed;
+            // Reset jumps when grounded
+            jumpsRemaining = maxJumps;
+
+            if (Input.GetButtonDown("Jump"))
+            {
+                Jump();
+            }
+        }
+        else if (Input.GetButtonDown("Jump") && jumpsRemaining > 0)
+        {
+            Jump();
         }
 
         if (gravity > baseLineGravity)
@@ -92,6 +106,13 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
+    void Jump()
+    {
+        gravity = baseLineGravity;
+        gravity *= -jumpSpeed;
+        jumpsRemaining--;
+    }
+
     void Dodge()
     {
         dodgeStartPosition = transform.position;
@@ -102,7 +123,6 @@ public class PlayerMovement : MonoBehaviour
         dodgeCooldownTimer = dodgeCooldown;
     }
 }
-
 
 
 
