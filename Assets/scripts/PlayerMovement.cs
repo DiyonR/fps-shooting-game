@@ -12,6 +12,7 @@ public class PlayerMovement : MonoBehaviour
     public float jumpSpeed = 0.8f;
     public float dodgeDistance = 7f;
     public float dodgeSpeed = 4f;
+    public float jumpForce = 10.0f;
 
     private float moveX;
     private float moveZ;
@@ -20,7 +21,7 @@ public class PlayerMovement : MonoBehaviour
     public CharacterController characterController;
 
     private bool dodgeOnCooldown = false;
-    private float dodgeCooldown = 5.0f;
+    private float dodgeCooldown = 3.0f;
     private float dodgeCooldownTimer = 0.0f;
 
     private Vector3 dodgeStartPosition;
@@ -108,9 +109,11 @@ public class PlayerMovement : MonoBehaviour
 
     void Jump()
     {
+
         gravity = baseLineGravity;
         gravity *= -jumpSpeed;
         jumpsRemaining--;
+
     }
 
     void Dodge()

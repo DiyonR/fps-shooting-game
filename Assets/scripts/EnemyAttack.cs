@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UIElements;
 
 public class EnemyAttack : MonoBehaviour
@@ -24,7 +26,7 @@ public class EnemyAttack : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+
     }
 
     // Update is called once per frame
@@ -42,5 +44,18 @@ public class EnemyAttack : MonoBehaviour
             enemyMovement.newLocation();
             foundPlayer = false;
         }
+
+        if (Vector3.Distance(transform.position, PLayer.position) <= 2)
+        {
+            SceneManager.LoadScene("menu");
+        }
+        Debug.Log(Vector3.Distance(transform.position, PLayer.position));
     }
+    //private void OnCollisionEnter (Collision collision)
+    //{
+    //    if (collision.gameObject.tag == "Player")
+    //    {     
+    //            SceneManager.LoadScene("menu");
+    //    }
+    //}
 }

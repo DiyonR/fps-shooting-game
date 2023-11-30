@@ -23,10 +23,11 @@ public class menu : MonoBehaviour
         SceneManager.LoadScene("instructions");
     }
 }
-// - enemy can kill me
+
+// - after death interaction with menu fixed
 // - add gun to player
 // - finish map
-// - text fir the levels
+// - text for the levels
 // - checkpoint for each level
 // - have a end boss
 // - be able to go to menu when boss is killed
